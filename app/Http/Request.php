@@ -29,24 +29,28 @@
             //POST JSON
             $inputRaw = file_get_contents('php://input');
 
-            $this->postVars = (strlen($inputRaw) && empty($_POST)) ? json_decode($inputRaw, true) : $this->postVars;
-
-
-           /* if(isset($_FILES['imagem'])){
+            if(isset($_FILES['imagem'])){
                 $img_name = $_FILES['imagem']['name'];
                 $tmp_name = $_FILES['imagem']['tmp_name'];
 
                 $time = time();
                 $new_image_name = $time.$img_name;
-                move_uploaded_file($tmp_name, "images/".$new_image_name);
+                move_uploaded_file($tmp_name, "ProfilePictures/".$new_image_name);
 
                 $this->file = $new_image_name;
                 $this->postVars        = $_POST ?? [];
-            }else{
-                $this->postVars        = $_POST ?? [];
-            }*/
 
+                $response = [
+                    'success' => true,
+                    'message' => 'Image uploaded successfully.'
+                ];
+                json_encode($response);
+
+            }else{
+                $this->postVars = (strlen($inputRaw) && empty($_POST)) ? json_decode($inputRaw, true) : $this->postVars;
+            }
         } 
+
         
         private function setUri(){
             $this->uri = $_SERVER['REQUEST_URI'] ?? '';

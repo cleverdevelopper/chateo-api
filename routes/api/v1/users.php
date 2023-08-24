@@ -20,6 +20,7 @@
         }
     ]);
 
+
     //Buusca utilizador pelo telefone
     $objRouter->get('/api/v1/phone/{telefone}', [
         'middlewares' => [
@@ -51,6 +52,42 @@
             return new Response(201, Api\Users::setEditUser($request, $id), 'application/json');
         }
     ]);
+
+     //EDICAO DE USERS USANDO API
+     $objRouter->put('/api/v1/profileupdate/{id}', [
+        'middlewares' => [
+            'api',
+            //'user-basic-auth'
+        ],
+        function ($request, $id){
+            return new Response(201, Api\Users::setEditProfile($request, $id), 'application/json');
+        }
+    ]);
+
+
+    
+
+    //EDICAO DE USERS USANDO API
+    $objRouter->post('/api/v1/profile/{id}', [
+        'middlewares' => [
+            'api',
+            //'user-basic-auth'
+        ],
+        function ($request, $id){
+            return new Response(201, Api\Users::setProfilePicture($request, $id), 'application/json');
+        }
+    ]);
+
+
+    $objRouter->get('/api/v1/profile', [
+        'middlewares' => [
+            'api'
+        ],
+        function ($request){
+            return new Response(200, Api\Users::getProfileFoto($request), 'application/json');
+        }
+    ]);
+
      //Exclusao DE USERS USANDO API
      $objRouter->delete('/api/v1/users/{id}', [
         'middlewares' => [

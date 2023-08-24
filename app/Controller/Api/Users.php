@@ -22,10 +22,35 @@
                     'id'            => $objUtilizador->id_user,
                     'public_key'    => $objUtilizador->public_key,
                     'name'          => $objUtilizador->nome,
-                    'telefone'      => $objUtilizador->telefone
+                    'telefone'      => $objUtilizador->telefone,
+                    'imagem'        => $objUtilizador->imagem,
                 ];
             }
             return $itens;
+        }
+
+        //Metodo responsavel por cirar um novo utilizador
+        public static function getProfileFoto($request){
+            $imageFilename = $_GET['filename'];
+
+            // Define the directory path where image files are stored
+            $imageDirectory = 'ProfilePictures/';
+
+            $imagePath = $imageDirectory . $imageFilename;
+
+            // Check if the image file exists
+            if (file_exists($imagePath)) {
+                $pathInfo = pathinfo($imagePath);
+                $imageExtension = $pathInfo['extension'];
+
+                header('Content-Type: image/'.$imageExtension);
+
+                readfile($imagePath);
+            } else {
+                // Return a placeholder image or an error message
+                header('Content-Type: image/png'); // Placeholder image format
+                readfile('path/to/placeholder/image.png'); // Replace with your placeholder image
+            }
         }
 
 
@@ -85,8 +110,14 @@
         }
 
 
-        //metodo responsavel pela exclusao o user
-        public static function setDeleteUser($request, $id){
+        public static function setEditProfile($request, $id){
+            $postVars = $request->getPostVars();
+            
+            //Validacao dos campos obrigatorios
+            if(!isset($postVars['nome'])){
+                throw new \Exception("O campo 'nome' é obrigatorio.", 400 );
+            }
+
             //Buscar a existencia de um utilizdor
             $objUtilizador = EntityUtilizador::getUtilizadorById($id);
 
@@ -94,6 +125,42 @@
                 throw new \Exception('O utilizador '.$id.' não foi encontrado!', 404 );
             }
 
+            //actualizaco do user na bd
+            $objUtilizador->nome                = $postVars['nome'];
+            $objUtilizador->updated_at          = date('Y-m-d H:i:s');
+            $objUtilizador->deleted_at          = NULL;
+
+            $objUtilizador->actualizar();
+            return [
+                'id'            => $objUtilizador->id_user,
+            ];
+        }
+
+
+        public static function setProfilePicture ($request, $id){
+            $objUtilizador = EntityUtilizador::getUtilizadorById($id);
+            $file = $request->getFile();
+
+            if(!$objUtilizador instanceof EntityUtilizador){
+                throw new \Exception("Este utilizador nao existe", 400 );
+            }
+
+            $postVars = $request->getPostVars();
+            $objUtilizador->imagem = $file ?? $objUtilizador->imagem;
+            $objUtilizador->actualizar();
+
+            return [
+                'success'       => true
+            ];
+        }
+
+        public static function setDeleteUser($request, $id){
+            //Buscar a existencia de um utilizdor
+            $objUtilizador = EntityUtilizador::getUtilizadorById($id);
+
+            if(!$objUtilizador instanceof EntityUtilizador){
+                throw new \Exception('O utilizador '.$id.' não foi encontrado!', 404 );
+            }
             //elimina do user na bd
             $objUtilizador->excluir();
             
@@ -101,7 +168,6 @@
                 'success'       => true
             ];
         }
-
 
 
         public static function getUsers($request){
@@ -124,7 +190,8 @@
                 'id'            => $objUtilizador->id_user,
                 'otp'           => $objUtilizador->otp,
                 'name'          => $objUtilizador->nome,
-                'telefone'      => $objUtilizador->telefone
+                'telefone'      => $objUtilizador->telefone,
+                'imagem'        => $objUtilizador->imagem,
             ];
         }
 

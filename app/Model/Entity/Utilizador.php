@@ -7,6 +7,7 @@
         public $nome;
         public $otp;
         public $telefone;
+        public $imagem;
         public $public_key;
         public $created_at;
         public $updated_at;
@@ -18,6 +19,7 @@
                 'nome'                      =>  $this->nome,
                 'otp'                       =>  $this->otp,
                 'telefone'                  =>  $this->telefone,
+                'imagem'                    =>  $this->imagem,
                 'public_key'                =>  $this->public_key,
                 'created_at'                =>  $this->created_at,
                 'updated_at'                =>  $this->updated_at,
@@ -43,6 +45,7 @@
                 'nome'                      =>  $this->nome,
                 'otp'                       =>  $this->otp,
                 'telefone'                  =>  $this->telefone,
+                'imagem'                    =>  $this->imagem,
                 'public_key'                =>  $this->public_key,
                 'created_at'                =>  $this->created_at,
                 'updated_at'                =>  $this->updated_at,

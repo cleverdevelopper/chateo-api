@@ -11,6 +11,15 @@
         }
     ]);
 
+    $objRouter->get('/api/v1/lastmessages', [
+        'middlewares' => [
+            'api'
+        ],
+        function ($request){
+            return new Response(200, Api\Message::getLastMessages($request), 'application/json');
+        }
+    ]);
+
      //CADASTRO DE USERS USANDO API
      $objRouter->post('/api/v1/messages', [
         'middlewares' => [

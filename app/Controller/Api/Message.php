@@ -36,6 +36,37 @@
         }
 
 
+        private static function getLastMessageIttem($request, &$objPagination){
+            $itens = [];
+            $quantidadeTotal = EntityMessage::getMessages(null, null, null, 'COUNT(*) as qtd')->fetchObject()->qtd;
+
+            $queryParams = $request->getQueryParams();
+            $paginaActual = $queryParams['page'] ?? 1;
+
+            $outgoing =  $queryParams['outgoing_id'];
+            $incoming =  $queryParams['incoming_id'];
+            $whereClouser = " outgoing_id = $outgoing AND incoming_id = $incoming OR outgoing_id = $incoming AND incoming_id = $outgoing ";
+
+            $objPagination = new Pagination($quantidadeTotal, $paginaActual, $quantidadeTotal);
+
+
+            $results = EntityMessage::getMessages($whereClouser, 'created_at', 1);
+
+            While ($objMessage = $results->fetchObject(EntityMessage::class)){
+                $itens[] = [
+                    'outgoing_id'               =>  $objMessage->outgoing_id,
+                    'incoming_id'               =>  $objMessage->incoming_id,
+                    'message'                   =>  $objMessage->message,
+                    'created_at'                =>  $objMessage->created_at,
+                    'updated_at'                =>  $objMessage->updated_at,
+                    'deleted_at'                =>  $objMessage->deleted_at,
+                ];
+            }
+            return $itens;
+        }
+        
+
+
         //Metodo responsavel por armazenar uma conversa nova
         public static function setNewMessage($request){
             $postVars = $request->getPostVars();
@@ -65,6 +96,13 @@
                 'messages' => self::getMessageItens($request, $objPagination)
             ];  
         }
+
+        public static function getLastMessages($request){
+            return [
+                'message' => self::getLastMessageIttem($request, $objPagination)
+            ];  
+        }
+
 
         //metodo responsavel por editar o user
        /* public static function setEditUser($request, $id){

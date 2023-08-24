@@ -3,9 +3,9 @@
     use App\Utils\ViewManager;
     use App\DatabaseManager\Pagination;
     use App\Model\Entity\Chat as EntityChat;
+    use App\Model\Entity\Utilizador as EntityUtilizador;
 
     class Chat extends Api{
-
         private static function getChatItens($request, &$objPagination){
             $itens = [];
             $quantidadeTotal = EntityChat::getChats(null, null, null, 'COUNT(*) as qtd')->fetchObject()->qtd;
@@ -13,58 +13,35 @@
             $queryParams = $request->getQueryParams();
             $paginaActual = $queryParams['page'] ?? 1;
 
-            $outgoing =  $queryParams['outgoing_id'];
-            $incoming =  $queryParams['incoming_id'];
-            $whereClouser = " outgoing_id = $outgoing AND incoming_id = $incoming OR outgoing_id = $incoming AND incoming_id = $outgoing ";
+            $my_id =  $queryParams['myID'];
+            $whereClouser = " outgoing_pk = $my_id OR incoming_pk = $my_id";
 
             $objPagination = new Pagination($quantidadeTotal, $paginaActual, $quantidadeTotal);
 
-
-            $results = EntityChat::getChats($whereClouser, 'id_chat', $objPagination->getLimit());
+            $results = EntityChat::getChats($whereClouser, 'id_chat desc', $objPagination->getLimit());
 
             While ($objChat = $results->fetchObject(EntityChat::class)){
+                $incoming = EntityUtilizador::getUtilizadorById($objChat->incoming_pk);
+                $outgoing = EntityUtilizador::getUtilizadorById($objChat->outgoing_pk);
                 $itens[] = [
-                    'outgoing_pk'               =>  $objChat->outgoing_pk,
-                    'incoming_pk'               =>  $objChat->incoming_pk,
-                    'outgoing_id'               =>  $objChat->outgoing_id,
-                    'incoming_id'               =>  $objChat->incoming_id,
-                    'created_at'                =>  $objChat->created_at,
-                    'updated_at'                =>  $objChat->updated_at,
-                    'deleted_at'                =>  $objChat->deleted_at,
+                    'id'                       => $objChat->id_chat,
+                    'id_incoming'              => $objChat->incoming_pk,
+                    'id_outgoing'              => $objChat->outgoing_pk,
+                    'nome_incoming'            => $incoming->nome,
+                    'nome_outgoing'            => $outgoing->nome,
+                    'sender'                   => $objChat->sender,
+                    'receiver'                 => $objChat->receiver,
+                    'public_key_incoming'      => $incoming->public_key,
+                    'public_key_outgoing'      => $outgoing->public_key,
+                    'message'                  => $objChat->message
                 ];
             }
             return $itens;
         }
 
-
-        //Metodo responsavel por armazenar uma conversa nova
-        public static function setNewChat($request){
-            $postVars = $request->getPostVars();
-            
-            //Validacao dos campos obrigatorios
-            if(!isset($postVars['outgoing_id']) && !isset($postVars['incoming_id'])){
-                throw new \Exception("Os campos remetente e receptor sao obrigatorios.", 400);
-            }
-
-            //Cadastrando o user na bd
-            $objChat = new EntityMessage;
-            $objChat->outgoing_pk         = $postVars['outgoing_pk'];
-            $objChat->incoming_pk         = $postVars['incoming_pk'];
-            $objChat->outgoing_id         = $postVars['outgoing_id'];
-            $objChat->incoming_id         = $postVars['incoming_id'];
-            $objChat->created_at          = date('Y-m-d H:i:s');
-            $objChat->updated_at          = date('Y-m-d H:i:s');
-            $objChat->deleted_at          = NULL;
-
-            $objChat->cadastrar();
-            return [
-                'success'       => 'Chat comecado com sucesso'
-            ];
-        }
-
         public static function getChat($request){
             return [
-                'chat' => self::getChatItens($request, $objPagination)
+                'users' => self::getChatItens($request, $objPagination)
             ];
         }
     }

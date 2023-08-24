@@ -6,19 +6,20 @@
         public $id_chat;
         public $outgoing_pk;
         public $incoming_pk;
-        public $outgoing_id;
-        public $incoming_id;
+        public $message;
+        public $sender;
+        public $receiver;
         public $created_at;
         public $updated_at;
         public $deleted_at;
 
-         
         public  function cadastrar(){
             $this->id_chat = (new Database('chats'))->insert([
                 'outgoing_pk'               =>  $this->outgoing_pk,
                 'incoming_pk'               =>  $this->incoming_pk,
-                'outgoing_id'               =>  $this->outgoing_id,
-                'incoming_id'               =>  $this->incoming_id,
+                'message'                   =>  $this->message,
+                'sender'                    =>  $this->sender,
+                'receiver'                  =>  $this->receiver,
                 'created_at'                =>  $this->created_at,
                 'updated_at'                =>  $this->updated_at,
                 'deleted_at'                =>  $this->deleted_at,
@@ -38,8 +39,9 @@
             return (new Database('chats'))->update('id_chat = '.$this->id_chat, [
                 'outgoing_pk'               =>  $this->outgoing_pk,
                 'incoming_pk'               =>  $this->incoming_pk,
-                'outgoing_id'               =>  $this->outgoing_id,
-                'incoming_id'               =>  $this->incoming_id,
+                'message'                   =>  $this->message,
+                'sender'                    =>  $this->sender,
+                'receiver'                  =>  $this->receiver,
                 'created_at'                =>  $this->created_at,
                 'updated_at'                =>  $this->updated_at,
                 'deleted_at'                =>  $this->deleted_at,
