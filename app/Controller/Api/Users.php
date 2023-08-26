@@ -169,7 +169,6 @@
             ];
         }
 
-
         public static function getUsers($request){
             return [
                 'users' => self::getUtilizadorItens($request, $objPagination)
