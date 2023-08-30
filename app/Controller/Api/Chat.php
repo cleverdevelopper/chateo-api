@@ -23,18 +23,34 @@
             While ($objChat = $results->fetchObject(EntityChat::class)){
                 $incoming = EntityUtilizador::getUtilizadorById($objChat->incoming_pk);
                 $outgoing = EntityUtilizador::getUtilizadorById($objChat->outgoing_pk);
-                $itens[] = [
-                    'id'                       => $objChat->id_chat,
-                    'id_incoming'              => $objChat->incoming_pk,
-                    'id_outgoing'              => $objChat->outgoing_pk,
-                    'nome_incoming'            => $incoming->nome,
-                    'nome_outgoing'            => $outgoing->nome,
-                    'sender'                   => $objChat->sender,
-                    'receiver'                 => $objChat->receiver,
-                    'public_key_incoming'      => $incoming->public_key,
-                    'public_key_outgoing'      => $outgoing->public_key,
-                    'message'                  => $objChat->message
-                ];
+                if($objChat->incoming_pk == $objChat->sender){
+                    $itens[] = [
+                        'id'                       => $objChat->id_chat,
+                        'id_incoming'              => $objChat->incoming_pk,
+                        'id_outgoing'              => $objChat->outgoing_pk,
+                        'nome_incoming'            => $incoming->nome,
+                        'nome_outgoing'            => $outgoing->nome,
+                        'sender'                   => $objChat->sender,
+                        'receiver'                 => $objChat->receiver,
+                        'public_key_incoming'      => $incoming->public_key,
+                        'public_key_outgoing'      => $outgoing->public_key,
+                        'message'                  => $objChat->message
+                    ];
+                }else{
+                    $itens[] = [
+                        'id'                       => $objChat->id_chat,
+                        'id_incoming'              => $objChat->incoming_pk,
+                        'id_outgoing'              => $objChat->outgoing_pk,
+                        'nome_incoming'            => $incoming->nome,
+                        'nome_outgoing'            => $outgoing->nome,
+                        'sender'                   => $objChat->sender,
+                        'receiver'                 => $objChat->receiver,
+                        'public_key_incoming'      => $outgoing->public_key,
+                        'public_key_outgoing'      => $incoming->public_key,
+                        'message'                  => $objChat->message
+                    ];
+                }
+                
             }
             return $itens;
         }
