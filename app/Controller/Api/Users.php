@@ -69,6 +69,7 @@
             $objUtilizador->nome                = $postVars['nome'];
             $objUtilizador->telefone            = $postVars['telefone'];
             $objUtilizador->public_key          = $postVars['public_key'];
+            $objUtilizador->imagem              = 'avatar.png';
             $objUtilizador->created_at          = date('Y-m-d H:i:s');
             $objUtilizador->updated_at          = date('Y-m-d H:i:s');
             $objUtilizador->deleted_at          = NULL;

@@ -34,7 +34,11 @@
                         'receiver'                 => $objChat->receiver,
                         'public_key_incoming'      => $incoming->public_key,
                         'public_key_outgoing'      => $outgoing->public_key,
-                        'message'                  => $objChat->message
+                        'public_key_incoming_chat' => $incoming->public_key,
+                        'public_key_outgoing_chat' => $outgoing->public_key,
+                        'message'                  => $objChat->message,
+                        'image_outgoing'           => $outgoing->imagem,
+                        'image_incoming'           => $incoming->imagem,
                     ];
                 }else{
                     $itens[] = [
@@ -47,7 +51,11 @@
                         'receiver'                 => $objChat->receiver,
                         'public_key_incoming'      => $outgoing->public_key,
                         'public_key_outgoing'      => $incoming->public_key,
-                        'message'                  => $objChat->message
+                        'public_key_incoming_chat' => $incoming->public_key,
+                        'public_key_outgoing_chat' => $outgoing->public_key,
+                        'message'                  => $objChat->message,
+                        'image_outgoing'           => $outgoing->imagem,
+                        'image_incoming'           => $incoming->imagem,
                     ];
                 }
                 
