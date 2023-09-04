@@ -1,9 +1,9 @@
 <?php return array(
     'root' => array(
-        'name' => 'chateo-api/chateo-api',
+        'name' => 'chateo-api/chateoapi',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'a674722350828c6456171222f3e01d86e78dcc9a',
+        'reference' => '59adea44ec6242873dc3a89a12a18c9c3a8bffb0',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -19,10 +19,10 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
-        'chateo-api/chateo-api' => array(
+        'chateo-api/chateoapi' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'a674722350828c6456171222f3e01d86e78dcc9a',
+            'reference' => '59adea44ec6242873dc3a89a12a18c9c3a8bffb0',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
