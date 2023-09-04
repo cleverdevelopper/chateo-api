@@ -1,5 +1,5 @@
 {
-    "name": "chateo-api/chateo-api",
+    "name": "chateo-api/chateoapi",
     "autoload": {
         "psr-4": {
             "App\\": "app/"
