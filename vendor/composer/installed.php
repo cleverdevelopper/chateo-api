@@ -3,7 +3,7 @@
         'name' => 'chateo-api/chateoapi',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => '59adea44ec6242873dc3a89a12a18c9c3a8bffb0',
+        'reference' => '5fbde758fb18d60dca0b7ca57157acf1e19b049b',
         'type' => 'library',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -22,7 +22,7 @@
         'chateo-api/chateoapi' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => '59adea44ec6242873dc3a89a12a18c9c3a8bffb0',
+            'reference' => '5fbde758fb18d60dca0b7ca57157acf1e19b049b',
             'type' => 'library',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
