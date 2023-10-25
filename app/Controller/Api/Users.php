@@ -24,6 +24,8 @@
                     'name'          => $objUtilizador->nome,
                     'telefone'      => $objUtilizador->telefone,
                     'imagem'        => $objUtilizador->imagem,
+                    'user_token'    => $objUtilizador->user_token,
+                    'connectionId'  => $objUtilizador->user_connection_id,
                 ];
             }
             return $itens;
@@ -208,6 +210,21 @@
                 'name'          => $objUtilizador->nome,
                 'telefone'      => $objUtilizador->telefone
             ];
+        }
+
+
+        public static function updateToken($request, $id){
+            $postVars = $request->getPostVars();
+
+            $objUtilizador = EntityUtilizador::getUtilizadorById($id);
+            
+            //actualizaco do user na bd
+            $objUtilizador->user_token              = $postVars['user_token'];
+            $objUtilizador->user_connection_id      = $postVars['user_connection_id'];
+            $objUtilizador->updated_at              = date('Y-m-d H:i:s');
+            $objUtilizador->deleted_at               = NULL;
+
+            $objUtilizador->actualizar();
         }
     }
 ?>

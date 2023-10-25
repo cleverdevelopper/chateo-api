@@ -98,4 +98,18 @@
             return new Response(201, Api\Users::setDeleteUser($request, $id), 'application/json');
         }
     ]);
+
+
+
+    //EDICAO DE USERS USANDO API
+    $objRouter->put('/api/v1/websocket/{id}', [
+        'middlewares' => [
+        'api',
+            //'user-basic-auth'
+        ],
+        function ($request, $id){
+            return new Response(201, Api\Users::updateToken($request, $id), 'application/json');
+        }
+    ]);
+
 ?>

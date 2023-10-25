@@ -31,6 +31,26 @@
         }
     ]);
 
+    //EDICAO DE USERS USANDO API
+    $objRouter->post('/api/v1/pictures', [
+        'middlewares' => [
+            'api',
+            //'user-basic-auth'
+        ],
+        function ($request){
+            return new Response(201, Api\Message::setImage($request), 'application/json');
+        }
+    ]);
+
+    $objRouter->get('/api/v1/message', [
+        'middlewares' => [
+            'api'
+        ],
+        function ($request){
+            return new Response(200, Api\Message::getPicture($request), 'application/json');
+        }
+    ]);
+
     /*$objRouter->get('/api/v1/users', [
         'middlewares' => [
             'api'

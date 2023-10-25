@@ -9,6 +9,8 @@
         public $telefone;
         public $imagem;
         public $public_key;
+        public $user_token;
+        public $user_connection_id;
         public $created_at;
         public $updated_at;
         public $deleted_at;
@@ -46,6 +48,8 @@
                 'otp'                       =>  $this->otp,
                 'telefone'                  =>  $this->telefone,
                 'imagem'                    =>  $this->imagem,
+                'user_token'                =>  $this->user_token,
+                'user_connection_id'        =>  $this->user_connection_id,
                 'public_key'                =>  $this->public_key,
                 'created_at'                =>  $this->created_at,
                 'updated_at'                =>  $this->updated_at,
@@ -57,7 +61,7 @@
         public function excluir(){
             return (new Database('users'))->delete('id_user = '.$this->id_user);
         }
-
+    
     }
 
 ?>

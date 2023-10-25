@@ -49,10 +49,9 @@
             return true;
         }
 
-        public function excluir(){
-            return (new Database('messages'))->delete('id_message = '.$this->id_message);
-        }
-
+        /*public function excluir(){
+            return (new Database('chats'))->delete('id_chat = '.$this->id_chat);
+        }*/
     }
 
 ?>

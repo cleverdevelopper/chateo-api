@@ -49,8 +49,61 @@
             }else{
                 $this->postVars = (strlen($inputRaw) && empty($_POST)) ? json_decode($inputRaw, true) : $this->postVars;
             }
+
+
         } 
 
+
+        /*private function setPostVars() {
+            // Verifique se a requisição é POST
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                // Verifique se existe um arquivo enviado com o nome 'imagem'
+                if (isset($_FILES['imagem'])) {
+                    // Diretório onde você deseja armazenar as imagens criptografadas
+                    $diretorioDestino = 'ProfilePictures/';
+
+                    // Crie um nome único para a imagem usando um carimbo de data/hora
+                    $time = time();
+                    $img_name = $_FILES['imagem']['name'];
+                    $new_image_name = $time . $img_name;
+
+                    // Caminho completo para o arquivo de destino
+                    $caminhoCompleto = $diretorioDestino . $new_image_name;
+
+                    // Mova o arquivo enviado para o diretório de destino
+                    if (move_uploaded_file($_FILES['imagem']['tmp_name'], $caminhoCompleto)) {
+                        // O arquivo foi armazenado com sucesso
+                        $response = [
+                            'success' => true,
+                            'message' => 'Imagem enviada e armazenada com sucesso.',
+                            'file_path' => $caminhoCompleto // Caminho completo da imagem no servidor
+                        ];
+                        echo json_encode($response);
+                    } else {
+                        // Ocorreu um erro ao mover o arquivo
+                        $response = [
+                            'success' => false,
+                            'message' => 'Erro ao mover o arquivo para o servidor.'
+                        ];
+                        echo json_encode($response);
+                    }
+                } else {
+                    // Nenhum arquivo 'imagem' foi enviado na requisição
+                    $response = [
+                        'success' => false,
+                        'message' => 'Nenhuma imagem foi enviada na requisição.'
+                    ];
+                    echo json_encode($response);
+                }
+            } else {
+                // A requisição não é POST
+                $response = [
+                    'success' => false,
+                    'message' => 'Apenas requisições POST são permitidas.'
+                ];
+                echo json_encode($response);
+            }
+        }*/
         
         private function setUri(){
             $this->uri = $_SERVER['REQUEST_URI'] ?? '';

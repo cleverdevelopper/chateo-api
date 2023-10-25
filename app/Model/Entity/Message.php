@@ -7,6 +7,8 @@
         public $outgoing_id;
         public $incoming_id;
         public $message;
+        public $image;
+        public $audio;
         public $created_at;
         public $updated_at;
         public $deleted_at;
@@ -17,6 +19,8 @@
                 'outgoing_id'               =>  $this->outgoing_id,
                 'incoming_id'               =>  $this->incoming_id,
                 'message'                   =>  $this->message,
+                'image'                     =>  $this->image,
+                'audio'                     =>  $this->audio,
                 'created_at'                =>  $this->created_at,
                 'updated_at'                =>  $this->updated_at,
                 'deleted_at'                =>  $this->deleted_at,
@@ -37,6 +41,8 @@
                 'outgoing_id'               =>  $this->outgoing_id,
                 'incoming_id'               =>  $this->incoming_id,
                 'message'                   =>  $this->message,
+                'image'                     =>  $this->image,
+                'audio'                     =>  $this->audio,
                 'created_at'                =>  $this->created_at,
                 'updated_at'                =>  $this->updated_at,
                 'deleted_at'                =>  $this->deleted_at,

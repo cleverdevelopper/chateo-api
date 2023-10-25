@@ -27,6 +27,8 @@
                     'outgoing_id'               =>  $objMessage->outgoing_id,
                     'incoming_id'               =>  $objMessage->incoming_id,
                     'message'                   =>  $objMessage->message,
+                    'image'                     =>  $objMessage->image,
+                    'audio'                     =>  $objMessage->audio,
                     'created_at'                =>  $objMessage->created_at,
                     'updated_at'                =>  $objMessage->updated_at,
                     'deleted_at'                =>  $objMessage->deleted_at,
@@ -101,6 +103,54 @@
             return [
                 'message' => self::getLastMessageIttem($request, $objPagination)
             ];  
+        }
+
+
+        public static function setImage ($request){
+            $postVars = $request->getPostVars();
+            $additionalData = json_decode($_POST['data'], true);
+            $file = $request->getFile();
+
+            $objMessage = new EntityMessage;
+            $objMessage->outgoing_id         = $additionalData['sender'];
+            $objMessage->incoming_id         = $additionalData['receiver'];
+            $objMessage->message             = $additionalData['message'];
+            $objMessage->image               = $file ?? $objMessage->image;
+            $objMessage->created_at          = date('Y-m-d H:i:s');
+            $objMessage->updated_at          = date('Y-m-d H:i:s');
+            $objMessage->deleted_at          = NULL;
+
+            $objMessage->cadastrar();
+
+            return [
+                'success'       => 'Mensagem enviada'
+            ];
+        }
+
+
+
+        //Metodo responsavel por cirar um novo utilizador
+        public static function getPicture($request){
+            $imageFilename = $_GET['filename'];
+
+            // Define the directory path where image files are stored
+            $imageDirectory = 'ProfilePictures/';
+
+            $imagePath = $imageDirectory . $imageFilename;
+
+            // Check if the image file exists
+            if (file_exists($imagePath)) {
+                $pathInfo = pathinfo($imagePath);
+                $imageExtension = $pathInfo['extension'];
+
+                header('Content-Type: image/'.$imageExtension);
+
+                readfile($imagePath);
+            } else {
+                // Return a placeholder image or an error message
+                header('Content-Type: image/png'); // Placeholder image format
+                readfile('path/to/placeholder/image.png'); // Replace with your placeholder image
+            }
         }
 
 
